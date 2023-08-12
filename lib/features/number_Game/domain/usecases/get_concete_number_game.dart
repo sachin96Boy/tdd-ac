@@ -1,14 +1,27 @@
 import 'package:dartz/dartz.dart';
-import 'package:tdd_ca_app/core/error/failures.dart';
-import 'package:tdd_ca_app/features/number_Game/domain/entities/number_game.dart';
-import 'package:tdd_ca_app/features/number_Game/domain/repositories/number_game_reposiory.dart';
+import 'package:equatable/equatable.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/usecases/usecase.dart';
+import '../entities/number_game.dart';
+import '../repositories/number_game_reposiory.dart';
 
-class GetConcreteNumberGame {
+class GetConcreteNumberGame implements UseCase<NumberGame, Params> {
   final NumberGameRepository repository;
 
   const GetConcreteNumberGame({required this.repository});
 
-  Future<Either<Failure, NumberGame>> execute(int number) async {
-    return await repository.getConcreteNumberGame(number);
+  @override
+  Future<Either<Failure, NumberGame>> call(Params params) async {
+    return await repository.getConcreteNumberGame(params.number);
   }
+}
+
+class Params extends Equatable {
+  final int number;
+
+  const Params({required this.number}) : super();
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
 }
